@@ -5,22 +5,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function BookModal({ display, setDisplay, books, setBooks }) {
-  const handleClose = () => setDisplay(false);
   const [validated, setValidated] = useState(false);
+  const handleClose = () => {
+    setDisplay(false);
+    setValidated(false);
+  };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      console.log('not valid')
+      setValidated(false);
       event.preventDefault();
       event.stopPropagation();
     }
-    event.preventDefault();
     setValidated(true);
-    const newBook = { title: event.currentTarget.elements.title.value, author: event.currentTarget.elements.author.value, favorite: event.currentTarget.elements.favorite.value };
-    const updatedBooks = [newBook, ...books];
-    setBooks(updatedBooks);
-    setDisplay(false);
+    if (form.checkValidity() === true) {
+      const newBook = { title: event.currentTarget.elements.title.value, author: event.currentTarget.elements.author.value, favorite: event.currentTarget.elements.favorite.checked };
+      const updatedBooks = [newBook, ...books];
+      setBooks(updatedBooks);
+      handleClose();
+    }
+
   };
 
   return (
@@ -33,7 +39,10 @@ function BookModal({ display, setDisplay, books, setBooks }) {
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" required />
+              <Form.Control.Feedback type="invalid">
+                Book title is required.
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="author">
@@ -41,7 +50,7 @@ function BookModal({ display, setDisplay, books, setBooks }) {
               <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="favorite">
-              <Form.Check type="checkbox" label="Favorite" />
+              <Form.Check type="checkbox" name="favorite" label="Favorite" />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
@@ -59,9 +68,9 @@ function Books({ books }) {
       <tr key={book.title}>
         <td>{book.title}</td>
         <td>{book.author}</td>
-        <td>{book.favorite}</td>
+        <td>{book.favorite ? 'Yes' : 'No'}</td>
       </tr>
-    )
+    );
   })
 
   if (books.length === 0) {
