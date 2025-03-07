@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from 'axios'
 
 function BookModal({ display, setDisplay, books, setBooks }) {
   const [validated, setValidated] = useState(false);
@@ -21,8 +21,11 @@ function BookModal({ display, setDisplay, books, setBooks }) {
     setValidated(true);
     if (form.checkValidity() === true) {
       const newBook = { title: event.currentTarget.elements.title.value, author: event.currentTarget.elements.author.value, favorite: event.currentTarget.elements.favorite.checked };
-      const updatedBooks = [newBook, ...books];
-      setBooks(updatedBooks);
+      axios
+        .post('http://localhost:3000/books', newBook)
+        .then(response => {
+          setBooks(books.concat(response.data))
+        })
       handleClose();
     }
 

@@ -1,13 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookModal from './Components/BookModal';
 import Books, { Book } from './Components/Books';
+import axios from 'axios'
 
 function App() {
   const [modalDisplayed, setModalDisplayed] = useState(false)
   const [books, setBooks] = useState<Book[]>([])
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3000/books', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      })
+      .then(response => {
+        console.log(response.data)
+        setBooks(response.data)
+      })
+  }, [])
 
   return (
     <>
