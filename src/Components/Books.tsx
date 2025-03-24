@@ -5,6 +5,7 @@ export interface Book {
   title: string,
   author?: string,
   favorite?: boolean
+  category?: string
 }
 
 function Books({ books }: { books: Book[] }) {
@@ -18,6 +19,7 @@ function Books({ books }: { books: Book[] }) {
         <td>{book.title}</td>
         <td>{book.author}</td>
         <td>{book.favorite ? 'Yes' : 'No'}</td>
+        <td>{book.category}</td>
       </tr>
     );
   })
@@ -29,6 +31,7 @@ function Books({ books }: { books: Book[] }) {
           <th>Title</th>
           <th>Author</th>
           <th>Favorite?</th>
+          <th>Category</th>
         </tr>
       </thead>
       <tbody>

@@ -9,6 +9,8 @@ import axios from 'axios'
 function App() {
   const [modalDisplayed, setModalDisplayed] = useState(false)
   const [books, setBooks] = useState<Book[]>([])
+  const [errorMessage, setErrorMessage] = useState<string>()
+
 
   useEffect(() => {
     axios
@@ -19,7 +21,6 @@ function App() {
         },
       })
       .then(response => {
-        console.log(response.data)
         setBooks(response.data)
       })
   }, [])
@@ -35,13 +36,14 @@ function App() {
           Add a book
         </Button>
       </div>
+      <Error errorMessage={errorMessage} />
       <div>
         <p>
           You have read {books.length} books
         </p>
         <Books books={books} />
       </div>
-      <BookModal display={modalDisplayed} setDisplay={setModalDisplayed} books={books} setBooks={setBooks} />
+      <BookModal display={modalDisplayed} setDisplay={setModalDisplayed} books={books} setBooks={setBooks} setError={setError} />
     </>
   )
 }

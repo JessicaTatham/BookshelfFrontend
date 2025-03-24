@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 
-function BookModal({ display, setDisplay, books, setBooks }) {
+function BookModal({ display, setDisplay, books, setBooks, setError }) {
   const [validated, setValidated] = useState(false);
   const handleClose = () => {
     setDisplay(false);
@@ -24,7 +24,11 @@ function BookModal({ display, setDisplay, books, setBooks }) {
       axios
         .post('http://localhost:3000/books', newBook)
         .then(response => {
+          console.log(response.data)
           setBooks(books.concat(response.data))
+        })
+        .catch(function (error) {
+          setError(error);
         })
       handleClose();
     }
