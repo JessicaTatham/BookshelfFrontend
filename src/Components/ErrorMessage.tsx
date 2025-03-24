@@ -2,10 +2,11 @@ import './App.css'
 import { Alert } from 'react-bootstrap';
 
 
-export interface ErrorProp {
+export interface ErrorProps {
   errorMessage?: string,
 }
-const Error = ({ errorMessage }: { errorMessage: ErrorProp }) => {
+const ErrorMessage = ({ errorMessage }: { errorMessage: ErrorProps }) => {
+  console.log(errorMessage)
   if (!errorMessage) {
     return;
   }
@@ -18,5 +19,5 @@ const Error = ({ errorMessage }: { errorMessage: ErrorProp }) => {
 
 
 
-export default Error
+export default ErrorMessage
 

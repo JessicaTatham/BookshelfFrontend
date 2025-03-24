@@ -23,6 +23,9 @@ function App() {
       .then(response => {
         setBooks(response.data)
       })
+      .catch(function (error) {
+        setErrorMessage(error.response.toJSON());
+      })
   }, [])
 
   return (
@@ -36,14 +39,14 @@ function App() {
           Add a book
         </Button>
       </div>
-      <Error errorMessage={errorMessage} />
+      <ErrorMessage errorMessage={errorMessage} />
       <div>
         <p>
           You have read {books.length} books
         </p>
         <Books books={books} />
       </div>
-      <BookModal display={modalDisplayed} setDisplay={setModalDisplayed} books={books} setBooks={setBooks} setError={setError} />
+      <BookModal display={modalDisplayed} setDisplay={setModalDisplayed} books={books} setBooks={setBooks} setErrorMessage={setErrorMessage} />
     </>
   )
 }
