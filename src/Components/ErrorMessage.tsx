@@ -1,4 +1,3 @@
-import './App.css'
 import { Alert } from 'react-bootstrap';
 
 
@@ -12,7 +11,7 @@ const ErrorMessage = ({ errorMessage }: { errorMessage: ErrorProps }) => {
   }
   return (
     <Alert key="add-book-error" variant="danger">
-      {errorMessage}
+      {/* {errorMessage} */}
     </Alert>
   )
 }

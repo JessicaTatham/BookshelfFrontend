@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BookModal from './Components/BookModal';
 import Books, { Book } from './Components/Books';
 import axios from 'axios'
+import ErrorMessage from './Components/ErrorMessage';
 
 function App() {
   const [modalDisplayed, setModalDisplayed] = useState(false)
