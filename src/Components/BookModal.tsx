@@ -5,6 +5,8 @@ import axios from 'axios'
 
 function BookModal({ display, setDisplay, books, setBooks, setErrorMessage }) {
   const [validated, setValidated] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+
   const handleClose = () => {
     setDisplay(false);
     setValidated(false);
@@ -20,11 +22,10 @@ function BookModal({ display, setDisplay, books, setBooks, setErrorMessage }) {
     }
     setValidated(true);
     if (form.checkValidity() === true) {
-      const newBook = { title: event.currentTarget.elements.title.value, author: event.currentTarget.elements.author.value, favorite: event.currentTarget.elements.favorite.checked };
+      const newBook = { title: event.currentTarget.elements.title.value, author: event.currentTarget.elements.author.value, favorite: favorited };
       axios
         .post('http://localhost:3000/books', newBook)
         .then(response => {
-          console.log(response.data)
           setBooks(books.concat(response.data))
         })
         .catch(function (error) {
@@ -34,6 +35,11 @@ function BookModal({ display, setDisplay, books, setBooks, setErrorMessage }) {
     }
 
   };
+
+  const toggleFavorited = (event) => {
+    const { checked } = event.target;
+    setFavorited(checked)
+  }
 
   return (
     <>
@@ -56,7 +62,7 @@ function BookModal({ display, setDisplay, books, setBooks, setErrorMessage }) {
               <Form.Control type="text" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="favorite">
-              <Form.Check type="checkbox" name="favorite" label="Favorite" />
+              <Form.Check type="checkbox" label="Favorite" onChange={toggleFavorited} />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
