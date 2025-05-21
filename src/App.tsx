@@ -12,7 +12,6 @@ function App() {
   const [books, setBooks] = useState<Book[]>([])
   const [errorMessage, setErrorMessage] = useState<string>()
 
-
   useEffect(() => {
     axios
       .get('http://localhost:3000/books', {
